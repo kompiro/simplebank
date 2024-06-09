@@ -1,7 +1,7 @@
 version: '3'
 services:
   devcontainer:
-    image: mcr.microsoft.com/devcontainers/base:jammy
+    image: ghcr.io/kompiro/devcontainers:latest
     volumes:
       - ..:/workspace/
     network_mode: service:db
@@ -16,7 +16,13 @@ services:
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
-      POSTGRES_DB: postgres
+      POSTGRES_DB: simple_bank
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
 
 volumes:
   postgres-data:

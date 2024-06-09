@@ -4,10 +4,11 @@
   "service": "devcontainer",
   "workspaceFolder": "/workspace/",
   "onCreateCommand": "bash .devcontainer/setup.sh",
+  "remoteUser": "vscode",
   "features": {
 		"ghcr.io/devcontainers/features/github-cli:1": {},
 		"ghcr.io/devcontainers/features/go:1": {},
-    "ghcr.io/devcontainers/features/docker-in-docker:2.11.0": {}
+    "ghcr.io/devcontainers/features/docker-in-docker:2.11.0": {},
 	},
   "customizations": {
     "vscode": {
@@ -16,7 +17,8 @@
         "vscode-icons-team.vscode-icons",
         "golang.Go",
         // "GitHub.copilot",
-        "timonwong.shellcheck"
+        "timonwong.shellcheck",
+        "inferrinizzard.prettier-sql-vscode"
       ]
     },
     "settings": {
@@ -25,7 +27,12 @@
       "editor.guides.bracketPairs": true,
       "editor.copyWithSyntaxHighlighting": false,
       "editor.formatOnSave": true,
-      "workbench.startupEditor": "none"
+      "workbench.startupEditor": "none",
+      "terminal.integrated.defaultProfile.windows": "zsh"
     }
-  }
+  },
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+	"forwardPorts": [
+		8080
+	]
 }
