@@ -1,9 +1,10 @@
 version: '3'
 services:
   devcontainer:
-    image: ghcr.io/kompiro/devcontainers:latest
+    image: ghcr.io/kompiro/yadm:latest
     volumes:
       - ..:/workspace/
+      - history:/home/vscode/.history
     network_mode: service:db
     stdin_open: true
     tty: true
@@ -26,3 +27,4 @@ services:
 
 volumes:
   postgres-data:
+  history:
