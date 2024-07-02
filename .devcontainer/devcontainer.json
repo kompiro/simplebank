@@ -32,7 +32,11 @@
       "terminal.integrated.defaultProfile.windows": "zsh",
       "dotfiles.targetPath": "",
       "dev.containers.gitCredentialHelperConfigLocation": "none",
-      "terminal.integrated.enablePersistentSessions": false
+      "terminal.integrated.enablePersistentSessions": false,
+      "files.autoSave": "afterDelay",
+      "go.testFlags": [
+        "-v"
+      ]
     }
   },
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
