@@ -19,7 +19,8 @@
         "golang.Go",
         "GitHub.copilot",
         "timonwong.shellcheck",
-        "inferrinizzard.prettier-sql-vscode"
+        "inferrinizzard.prettier-sql-vscode",
+        "GitHub.vscode-github-actions"
       ]
     },
     "settings": {
@@ -28,6 +29,8 @@
       "editor.guides.bracketPairs": true,
       "editor.copyWithSyntaxHighlighting": false,
       "editor.formatOnSave": true,
+      "editor.indentSize": "tabSize",
+      "editor.detectIndentation": false,
       "workbench.startupEditor": "none",
       "terminal.integrated.defaultProfile.windows": "zsh",
       "dotfiles.targetPath": "",
