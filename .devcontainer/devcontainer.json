@@ -20,7 +20,9 @@
         "GitHub.copilot",
         "timonwong.shellcheck",
         "inferrinizzard.prettier-sql-vscode",
-        "GitHub.vscode-github-actions"
+        "GitHub.vscode-github-actions",
+        "rangav.vscode-thunder-client",
+        "oderwat.indent-rainbow"
       ]
     },
     "settings": {
@@ -36,7 +38,7 @@
       "dotfiles.targetPath": "",
       "dev.containers.gitCredentialHelperConfigLocation": "none",
       "terminal.integrated.enablePersistentSessions": false,
-      "files.autoSave": "afterDelay",
+      "files.autoSave": "onFocusChange",
       "go.testFlags": [
         "-v"
       ]
