@@ -3,13 +3,8 @@ package main
 import (
 	"context"
 	"log"
-	"os"
-
-	logadapter "github.com/jackc/pgx-zerolog"
-	"github.com/rs/zerolog"
 
 	"github.com/jackc/pgx/v5/pgxpool"
-	"github.com/jackc/pgx/v5/tracelog"
 
 	"github.com/techschool/simplebank/api"
 	db "github.com/techschool/simplebank/db/sqlc"
@@ -23,18 +18,13 @@ func main() {
 	}
 	pgxConfig, err := pgxpool.ParseConfig(config.DBSource)
 	if err != nil {
-		log.Fatal("cannot connect to db: " + err.Error())
+		return
 	}
 
-	zlogger := zerolog.New(zerolog.ConsoleWriter{Out: os.Stdout}).With().Timestamp().Logger()
-
-	adapter := logadapter.NewLogger(zlogger)
-
-	tracer := tracelog.TraceLog{
-		Logger:   adapter,
-		LogLevel: tracelog.LogLevelTrace,
+	err = util.SetupLogger(pgxConfig)
+	if err != nil {
+		log.Fatal("cannot setup logger: " + err.Error())
 	}
-	pgxConfig.ConnConfig.Tracer = &tracer
 
 	connPool, err := pgxpool.NewWithConfig(context.Background(), pgxConfig)
 	if err != nil {
