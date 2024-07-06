@@ -12,7 +12,7 @@
     }
   },
   "remoteEnv": {
-    "TZ": "Asia/Tokyo",
+    "TZ": "Asia/Tokyo"
   },
   "customizations": {
     "vscode": {
