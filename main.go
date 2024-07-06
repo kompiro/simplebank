@@ -13,15 +13,15 @@ import (
 
 	"github.com/techschool/simplebank/api"
 	db "github.com/techschool/simplebank/db/sqlc"
-)
-
-const (
-	dbSource      = "postgresql://postgres:postgres@localhost:5432/simple_bank?sslmode=disable"
-	serverAddress = "0.0.0.0:3000"
+	"github.com/techschool/simplebank/util"
 )
 
 func main() {
-	config, err := pgxpool.ParseConfig(dbSource)
+	config, err := util.LoadConfig(".")
+	if err != nil {
+		log.Fatal("cannot load config: " + err.Error())
+	}
+	pgxConfig, err := pgxpool.ParseConfig(config.DBSource)
 	if err != nil {
 		log.Fatal("cannot connect to db: " + err.Error())
 	}
@@ -34,9 +34,9 @@ func main() {
 		Logger:   adapter,
 		LogLevel: tracelog.LogLevelTrace,
 	}
-	config.ConnConfig.Tracer = &tracer
+	pgxConfig.ConnConfig.Tracer = &tracer
 
-	connPool, err := pgxpool.NewWithConfig(context.Background(), config)
+	connPool, err := pgxpool.NewWithConfig(context.Background(), pgxConfig)
 	if err != nil {
 		log.Fatal("cannot connect to db: " + err.Error())
 	}
@@ -44,7 +44,7 @@ func main() {
 	store := db.NewStore(connPool)
 	server := api.NewServer(store)
 
-	err = server.Start(serverAddress)
+	err = server.Start(config.ServerAddress)
 	if err != nil {
 		log.Fatal("cannot start server: " + err.Error())
 	}
