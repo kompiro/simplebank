@@ -17,6 +17,76 @@ import (
 	"github.com/techschool/simplebank/util"
 )
 
+func TestCreateAccountAPI(t *testing.T) {
+	account := randomAccount()
+	// before inserted
+	account.ID = 0
+
+	testCases := []struct {
+		name       string
+		params     db.CreateAccountParams
+		buildStubs func(
+			store *mockdb.MockStore,
+			params db.CreateAccountParams,
+		)
+		checkResponse func(
+			t *testing.T,
+			recorder *httptest.ResponseRecorder,
+		)
+	}{
+		{
+			name: "OK",
+			params: db.CreateAccountParams{
+				Owner:    account.Owner,
+				Balance:  0,
+				Currency: account.Currency,
+			},
+			buildStubs: func(
+				store *mockdb.MockStore,
+				params db.CreateAccountParams,
+			) {
+				store.EXPECT().
+					CreateAccount(gomock.Any(), gomock.Eq(params)).
+					Times(1)
+			},
+			checkResponse: func(
+				t *testing.T,
+				recorder *httptest.ResponseRecorder,
+			) {
+
+				require.Equal(t, http.StatusOK, recorder.Code)
+			},
+		},
+	}
+
+	for i := range testCases {
+		tc := testCases[i]
+		t.Run(tc.name, func(t *testing.T) {
+			ctrl := gomock.NewController(t)
+			defer ctrl.Finish()
+
+			json, err := json.Marshal(account)
+			require.NoError(t, err)
+			body := bytes.NewBuffer(json)
+
+			store := mockdb.NewMockStore(ctrl)
+			// build stubs
+			tc.buildStubs(store, tc.params)
+
+			// start test serer and send request
+			server := NewServer(store)
+			recorder := httptest.NewRecorder()
+
+			url := "/accounts"
+			request, err := http.NewRequest(http.MethodPost, url, body)
+			require.NoError(t, err)
+
+			server.router.ServeHTTP(recorder, request)
+			tc.checkResponse(t, recorder)
+		})
+	}
+}
+
 func TestGetAccountAPI(t *testing.T) {
 	account := randomAccount()
 
