@@ -11,6 +11,9 @@
       "version": "1.22.4"
     }
   },
+  "remoteEnv": {
+    "TZ": "Asia/Tokyo",
+  },
   "customizations": {
     "vscode": {
       "extensions": [
