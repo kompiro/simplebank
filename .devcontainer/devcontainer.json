@@ -48,6 +48,7 @@
         "dev.containers.gitCredentialHelperConfigLocation": "none",
         "terminal.integrated.enablePersistentSessions": false,
         "files.autoSave": "afterDelay",
+        "files.insertFinalNewline": true,
         "go.testFlags": [
           "-v"
         ]
