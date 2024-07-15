@@ -51,7 +51,8 @@
         "files.insertFinalNewline": true,
         "go.testFlags": [
           "-v"
-        ]
+        ],
+        "Prettier-SQL.SQLFlavourOverride": "postgresql",
       }
     }
   },

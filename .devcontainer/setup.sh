@@ -10,3 +10,6 @@ go install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@lat
 
 # setup sqlc
 go install github.com/sqlc-dev/sqlc/cmd/sqlc@latest
+
+# setup mockgen
+go install github.com/golang/mock/mockgen@v1.6.0
