@@ -1,15 +1,15 @@
 DB_URL=postgresql://postgres:postgres@localhost:5432/simple_bank?sslmode=disable
 
-migrateup:
+migrate:
 	migrate -path db/migration -database "$(DB_URL)" -verbose up
 
-migrateup1:
+migrateup:
 	migrate -path db/migration -database "$(DB_URL)" -verbose up 1
 
-migratedown:
+rollback:
 	migrate -path db/migration -database "$(DB_URL)" -verbose down
 
-migratedown1:
+migratedown:
 	migrate -path db/migration -database "$(DB_URL)" -verbose down 1
 
 sqlc:
@@ -24,4 +24,4 @@ server:
 mock:
 	mockgen -package mockdb -destination db/mock/store.go github.com/techschool/simplebank/db/sqlc Store
 
-.PHONY: migrateup migrateup1 migratedown migratedown1 sqlc test server mock
+.PHONY: migrateup migrate migratedown rollback sqlc test server mock
