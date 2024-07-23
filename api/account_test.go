@@ -50,7 +50,7 @@ func TestCreateAccountAPI(t *testing.T) {
 				}
 				store.EXPECT().
 					CreateAccount(gomock.Any(), gomock.Eq(arg)).
-					Times(1)
+					Times(1).Return(account, nil)
 			},
 			checkResponse: func(
 				t *testing.T,
@@ -135,7 +135,7 @@ func TestCreateAccountAPI(t *testing.T) {
 			tc.buildStubs(store)
 
 			// start test serer and send request
-			server := NewServer(store)
+			server := newTestServer(t, store)
 			recorder := httptest.NewRecorder()
 
 			url := "/accounts"
@@ -220,7 +220,7 @@ func TestGetAccountAPI(t *testing.T) {
 			tc.buildStubs(store)
 
 			// start test serer and send request
-			server := NewServer(store)
+			server := newTestServer(t, store)
 			recorder := httptest.NewRecorder()
 
 			url := fmt.Sprintf("/accounts/%d", tc.accountID)
