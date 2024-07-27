@@ -43,7 +43,7 @@ jobs:
           sudo apt install migrate
 
       - name: Run migrations
-        run: make migrateup
+        run: make migrate
 
       - name: Test
         run: make test
