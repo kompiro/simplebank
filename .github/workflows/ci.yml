@@ -40,7 +40,7 @@ jobs:
       - name: Install golang migrate
         run: |
           curl -s https://packagecloud.io/install/repositories/golang-migrate/migrate/script.deb.sh | sudo bash
-          sudo apt install migrate
+          sudo apt install migrate=4.17.1
 
       - name: Run migrations
         run: make migrate
