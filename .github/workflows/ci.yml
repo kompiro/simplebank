@@ -38,7 +38,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install golang migrate
-        run: go install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
+        run: |
+          curl -s https://packagecloud.io/install/repositories/golang-migrate/migrate/script.deb.sh | sudo bash
+          sudo apt install migrate
 
       - name: Run migrations
         run: make migrateup
