@@ -5,7 +5,7 @@ services:
     volumes:
       - ..:/workspace/
       - history:/home/vscode/.history
-    network_mode: service:db
+      - /var/run/docker.sock:/var/run/docker.sock
     stdin_open: true
     tty: true
 
