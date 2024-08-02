@@ -1,4 +1,4 @@
-DB_URL=postgresql://postgres:postgres@localhost:5432/simple_bank?sslmode=disable
+DB_URL=postgresql://postgres:postgres@db:5432/simple_bank?sslmode=disable
 
 migrate:
 	migrate -path db/migration -database "$(DB_URL)" -verbose up

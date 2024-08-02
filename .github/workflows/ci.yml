@@ -12,8 +12,9 @@ jobs:
   test:
       name: Test
       runs-on: ubuntu-latest
+      container: golang:1.22.5-alpine3.20
       services:
-        postgres:
+        db:
           image: postgres:latest
           env:
             POSTGRES_USER: postgres
@@ -28,20 +29,17 @@ jobs:
             - 5432:5432
 
       steps:
-  
-      - name: Set up Go 1.x
-        uses: actions/setup-go@v2
-        with:
-          go-version: ^1.22.4
-        id: go
       - name: Check out code into the Go module directory
         uses: actions/checkout@v4
 
       - name: Install golang migrate
-        run: go install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
+        run: |
+          apk add curl make
+          curl -L https://github.com/golang-migrate/migrate/releases/download/v4.17.1/migrate.linux-amd64.tar.gz | tar xvz
+          mv migrate /usr/local/bin/migrate
 
       - name: Run migrations
-        run: make migrateup
+        run: make migrate
 
       - name: Test
         run: make test
