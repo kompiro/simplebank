@@ -4,12 +4,15 @@ on:
   workflow_dispatch:
   release:
     types: [prereleased]
-permissions:
-  packages: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
 
     steps:
       - name: Checkout repository
@@ -37,6 +40,13 @@ jobs:
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/simplebank:latest
 
+      - name: Generate artifact attestation
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-name: ${{ github.repository_owner }}/simplebank
+          subject-digest: ${{ github.sha }}
+          push-to-registry: true
+      
       - name: Build and push migrate image
         uses: docker/build-push-action@v6
         with:
