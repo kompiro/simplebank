@@ -28,7 +28,10 @@
         "inferrinizzard.prettier-sql-vscode",
         "GitHub.vscode-github-actions",
         "rangav.vscode-thunder-client",
-        "oderwat.indent-rainbow"
+        "oderwat.indent-rainbow",
+        "shd101wyy.markdown-preview-enhanced",
+        "ms-azuretools.vscode-docker",
+        "TakumiI.markdowntable"
       ],
       "settings": {
         "editor.tabSize": 2,
