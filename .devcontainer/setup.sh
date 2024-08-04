@@ -14,3 +14,13 @@ go install github.com/sqlc-dev/sqlc/cmd/sqlc@latest
 
 # setup mockgen
 go install github.com/golang/mock/mockgen@v1.6.0
+
+# install github cli extensions
+exts=(
+  "seachicken/gh-poi"
+  "yusukebe/gh-markdown-preview"
+)
+
+for ext in "${exts[@]}"; do
+  /home/vscode/.asdf/shims/gh extension install "$ext"
+done
