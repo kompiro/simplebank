@@ -39,6 +39,7 @@ jobs:
           target: app
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/simplebank:latest
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Generate artifact attestation
         uses: actions/attest-build-provenance@v1
@@ -55,3 +56,4 @@ jobs:
           target: migrate
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/simplebank-migrate:latest
+          github-token: ${{ secrets.GITHUB_TOKEN }}
