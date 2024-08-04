@@ -12,6 +12,9 @@
     }
   },
   "remoteEnv": {
+    "GH_TOKEN": "${localEnv:GH_TOKEN}"
+  },
+  "containerEnv": {
     "TZ": "Asia/Tokyo"
   },
   "customizations": {
