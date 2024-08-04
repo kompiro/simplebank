@@ -1,8 +1,6 @@
 name: build and push image
 
 on:
-  push:
-    branches: [improve_build_and_push_workflow]
   workflow_dispatch:
   release:
     types: [prereleased]
