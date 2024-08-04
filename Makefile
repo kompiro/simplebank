@@ -24,4 +24,19 @@ server:
 mock:
 	mockgen -package mockdb -destination db/mock/store.go github.com/techschool/simplebank/db/sqlc Store
 
-.PHONY: migrateup migrate migratedown rollback sqlc test server mock
+app.image.build:
+	docker buildx build -t simplebank:latest --target app .
+
+app.image.push:
+	docker image tag simplebank:latest ghcr.io/kompiro/simplebank:latest
+	docker image push ghcr.io/kompiro/simplebank:latest
+
+migrate.image.build:
+	docker buildx build -t simplebank-migrate:latest --target migrate .
+
+migrate.image.push:
+	docker image tag simplebank-migrate:latest ghcr.io/kompiro/simplebank-migrate:latest
+	docker image push ghcr.io/kompiro/simplebank-migrate:latest
+
+.PHONY: migrateup migrate migratedown rollback sqlc test server mock app.image.build app.image.push migrate.image.build migrate.image.push
+
