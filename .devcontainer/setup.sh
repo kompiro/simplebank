@@ -19,6 +19,7 @@ go install github.com/golang/mock/mockgen@v1.6.0
 exts=(
   "seachicken/gh-poi"
   "yusukebe/gh-markdown-preview"
+  "nektos/gh-act"
 )
 
 for ext in "${exts[@]}"; do
