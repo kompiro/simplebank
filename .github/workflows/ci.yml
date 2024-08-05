@@ -51,4 +51,9 @@ jobs:
           name: test-results
           path: test-report.xml
 
-
+      - name: Publish Test Report
+        id: test-report
+        uses: mikepenz/action-junit-report@v4
+        if: always()
+        with:
+          report_paths: test-report.xml
