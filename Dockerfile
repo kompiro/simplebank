@@ -13,6 +13,8 @@ RUN --mount=type=bind,target=. go build -o /bin/server main.go
 
 # migrate environment
 FROM alpine:3.20 AS migrate
+LABEL org.opencontainers.image.title "migrator for simple bank"
+LABEL org.opencontainers.image.description "Migrate database schema"
 
 ENV DB_SOURCE=postgresql://postgres:postgres@db:5432/simple_bank?sslmode=disable
 WORKDIR /app
@@ -27,6 +29,8 @@ CMD ["sh", "-c", "/app/migrate -path /app/migration -database ${DB_SOURCE} -verb
 
 # running environment
 FROM alpine:3.20 AS app
+LABEL org.opencontainers.image.title "app for simple bank"
+LABEL org.opencontainers.image.description "Simple Bank API server"
 
 WORKDIR /app
 COPY --from=builder /bin/server /app/server
