@@ -1,7 +1,8 @@
 name: build and push image
 
 on:
-  push: [use_docker_metadata]
+  push: 
+    branches: [use_docker_metadata]
   workflow_dispatch:
   release:
     types: [prereleased]
