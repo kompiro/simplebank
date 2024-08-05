@@ -44,10 +44,9 @@ jobs:
       - name: Test
         run: make test-report
 
-      - name: Test Report
-        uses: dorny/test-reporter@v1
-        if: success() || failure()    # run this step even if previous step failed
+      - uses: actions/upload-artifact@v2  # upload test results
+        if: success() || failure()        # run this step even if previous step failed
         with:
-          name: Go Tests            # Name of the check run which will be created
-          path: test-report.xml     # Path to test results
-          reporter: jest-junit      # Format of test results
+          name: test-results
+          path: test-report.xml
+
