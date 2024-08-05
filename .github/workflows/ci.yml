@@ -8,6 +8,9 @@ on:
     branches:
       - main
 
+permissions:
+  checks: write
+
 jobs:
   test:
       name: Test
@@ -44,9 +47,17 @@ jobs:
       - name: Test
         run: make test-report
 
-      - uses: actions/upload-artifact@v2  # upload test results
-        if: success() || failure()        # run this step even if previous step failed
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v4  
+        if: always()
         with:
           name: test-results
           path: test-report.xml
 
+      - name: Publish Test Report
+        id: test-report
+        uses: mikepenz/action-junit-report@v4
+        if: always()
+        with:
+          report_paths: test-report.xml
+          check_name: Go test report
