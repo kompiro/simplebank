@@ -8,6 +8,9 @@ on:
     branches:
       - main
 
+permissions:
+  checks: write
+
 jobs:
   test:
       name: Test
@@ -57,3 +60,4 @@ jobs:
         if: always()
         with:
           report_paths: test-report.xml
+          check_name: Go test report
