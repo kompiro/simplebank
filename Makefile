@@ -18,6 +18,9 @@ sqlc:
 test:
 	go test -v -cover ./...
 
+test-report:
+	go run gotest.tools/gotestsum@latest --junitfile test-report.xml -- -v -cover ./...
+
 server:
 	go run main.go
 
