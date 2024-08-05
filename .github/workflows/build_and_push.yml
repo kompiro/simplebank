@@ -38,6 +38,11 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: ghcr.io/${{ github.repository_owner }}/simplebank/app
+          labels: |
+            org.opencontainers.image.title=Simple Bank App
+            org.opencontainers.image.description=app for simple bank
+            org.opencontainers.image.vendor=kompiro
+            org.opencontainers.image.license=MIT
 
       - name: Build and push app image
         uses: docker/build-push-action@v6
@@ -54,6 +59,11 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: ghcr.io/${{ github.repository_owner }}/simplebank/migrate
+          labels: |
+            org.opencontainers.image.title=Simple Bank schema migrator
+            org.opencontainers.image.description=Migrate database schema
+            org.opencontainers.image.vendor=kompiro
+            org.opencontainers.image.license=MIT
 
       - name: Build and push migrate image
         uses: docker/build-push-action@v6
