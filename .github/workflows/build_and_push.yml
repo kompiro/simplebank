@@ -42,7 +42,7 @@ jobs:
             org.opencontainers.image.title=Simple Bank App
             org.opencontainers.image.description=app for simple bank
             org.opencontainers.image.vendor=kompiro
-            org.opencontainers.image.license=MIT
+            org.opencontainers.image.licenses=MIT
 
       - name: Build and push app image
         uses: docker/build-push-action@v6
@@ -63,7 +63,7 @@ jobs:
             org.opencontainers.image.title=Simple Bank schema migrator
             org.opencontainers.image.description=Migrate database schema
             org.opencontainers.image.vendor=kompiro
-            org.opencontainers.image.license=MIT
+            org.opencontainers.image.licenses=MIT
 
       - name: Build and push migrate image
         uses: docker/build-push-action@v6
