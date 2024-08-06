@@ -56,7 +56,7 @@ jobs:
       - name: Generate artifact attestation for app
         uses: actions/attest-build-provenance@v1
         with:
-          subject-name: ${{ github.repository_owner }}/simplebank/app
+          subject-name: ghcr.io/${{ github.repository_owner }}/simplebank/app
           subject-digest: ${{ steps.push-app.outputs.digest }}
           push-to-registry: true
 
@@ -85,6 +85,6 @@ jobs:
       - name: Generate artifact attestation for migrate
         uses: actions/attest-build-provenance@v1
         with:
-          subject-name: ${{ github.repository_owner }}/simplebank/migrate
+          subject-name: ghcr.io/${{ github.repository_owner }}/simplebank/migrate
           subject-digest: ${{ steps.push-migrate.outputs.digest }}
           push-to-registry: true
