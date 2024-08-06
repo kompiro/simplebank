@@ -1,9 +1,9 @@
 name: build and push image
 
 on:
+  push: 
+    branches: [main]
   workflow_dispatch:
-  release:
-    types: [prereleased]
 
 jobs:
   build:
