@@ -1,9 +1,9 @@
 name: build and push image
 
 on:
+  push: 
+    branches: [main]
   workflow_dispatch:
-  release:
-    types: [prereleased]
 
 jobs:
   build:
@@ -44,6 +44,7 @@ jobs:
 
       - name: Build and push app image
         uses: docker/build-push-action@v6
+        id: push-app
         with:
           context: .
           file: ./Dockerfile
@@ -51,6 +52,13 @@ jobs:
           push: true
           tags: ${{ steps.meta-app.outputs.tags }}
           labels: ${{ steps.meta-app.outputs.labels }}
+
+      - name: Generate artifact attestation for app
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-name: ghcr.io/${{ github.repository_owner }}/simplebank/app
+          subject-digest: ${{ steps.push-app.outputs.digest }}
+          push-to-registry: true
 
       - name: Docker meta for migrate
         id: meta-migrate
@@ -65,6 +73,7 @@ jobs:
 
       - name: Build and push migrate image
         uses: docker/build-push-action@v6
+        id: push-migrate
         with:
           context: .
           file: ./Dockerfile
@@ -72,3 +81,10 @@ jobs:
           push: true
           tags: ${{ steps.meta-migrate.outputs.tags }}
           labels: ${{ steps.meta-migrate.outputs.labels }}
+
+      - name: Generate artifact attestation for migrate
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-name: ghcr.io/${{ github.repository_owner }}/simplebank/migrate
+          subject-digest: ${{ steps.push-migrate.outputs.digest }}
+          push-to-registry: true
