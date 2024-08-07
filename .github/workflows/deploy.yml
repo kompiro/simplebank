@@ -7,6 +7,9 @@ on:
 jobs:
   push_to_ecr:
     runs-on: ubuntu-latest
+    env:
+      SOURCE_REPO_BASE: ghcr.io/${{ github.repository_owner }}/simplebank
+      DEST_REPO_BASE: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-2.amazonaws.com/simplebank
 
     steps:
       - name: Login to GitHub Container Registry
@@ -17,10 +20,15 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Pull Docker image
-        run: docker image pull ghcr.io/${{ github.repository_owner }}/simplebank/app:main
+        run: |
+          docker image pull ${{ env.SOURCE_REPO_BASE }}/app:main
+          docker image pull ${{ env.SOURCE_REPO_BASE }}/migrate:main
 
       - name: Tag for Destination
-        run: docker image tag ghcr.io/${{ github.repository_owner }}/simplebank/app:main ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-2.amazonaws.com/simplebank/app:${{ github.ref_name }}
+        run: |
+          docker image tag ${{ env.SOURCE_REPO_BASE }}/app:main ${{ env.DEST_REPO_BASE }}/app:${{ github.ref_name }}
+          docker image tag ${{ env.SOURCE_REPO_BASE }}/migrate:main ${{ env.DEST_REPO_BASE }}/migrate:${{ github.ref_name }}
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -33,5 +41,6 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v2
 
       - name: Push Docker image
-        run: docker image push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-2.amazonaws.com/simplebank/app:${{ github.ref_name }}
-
+        run: |
+          docker image push ${{ env.DEST_REPO_BASE }}/app:${{ github.ref_name }}
+          docker image push ${{ env.DEST_REPO_BASE }}/migrate:${{ github.ref_name }}
