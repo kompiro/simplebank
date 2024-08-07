@@ -31,4 +31,4 @@ jobs:
         uses: alex289/docker-image-transfer-action@v1.2.1
         with:
           source: 'ghcr.io/${{ github.repository_owner }}/simplebank/app:main'
-          destination: '${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-2.amazonaws.com/simpblebank/app:${{ github.ref_name }}'
+          destination: '${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-2.amazonaws.com/simplebank/app:${{ github.ref_name }}'
