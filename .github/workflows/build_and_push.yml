@@ -25,7 +25,7 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -41,6 +41,20 @@ jobs:
             org.opencontainers.image.description=app for simple bank
             org.opencontainers.image.vendor=kompiro
             org.opencontainers.image.licenses=MIT
+          annotations: |
+            org.opencontainers.image.description=app for simple bank
+            org.opencontainers.image.licenses=MIT
+          flavor: |
+            latest=false
+          tags: |
+            # set latest tag for main branch
+            type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'main') }}
+            type=schedule,pattern={{date 'YYYYMMDD'}}
+            type=ref,event=branch
+            type=ref,event=tag
+            type=ref,event=pr
+            # full length sha
+            type=sha,value=${{ github.sha }},prefix=,format=long
 
       - name: Build and push app image
         uses: docker/build-push-action@v6
@@ -52,6 +66,7 @@ jobs:
           push: true
           tags: ${{ steps.meta-app.outputs.tags }}
           labels: ${{ steps.meta-app.outputs.labels }}
+          annotations: ${{ steps.meta-app.outputs.annotations }}
 
       - name: Generate artifact attestation for app
         uses: actions/attest-build-provenance@v1
@@ -70,6 +85,20 @@ jobs:
             org.opencontainers.image.description=Migrate database schema
             org.opencontainers.image.vendor=kompiro
             org.opencontainers.image.licenses=MIT
+          annotations: |
+            org.opencontainers.image.description=Migrate database schema
+            org.opencontainers.image.licenses=MIT
+          flavor: |
+            latest=false
+          tags: |
+            # set latest tag for main branch
+            type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'main') }}
+            type=schedule,pattern={{date 'YYYYMMDD'}}
+            type=ref,event=branch
+            type=ref,event=tag
+            type=ref,event=pr
+            # full length sha
+            type=sha,value=${{ github.sha }},prefix=,format=long
 
       - name: Build and push migrate image
         uses: docker/build-push-action@v6
@@ -81,6 +110,7 @@ jobs:
           push: true
           tags: ${{ steps.meta-migrate.outputs.tags }}
           labels: ${{ steps.meta-migrate.outputs.labels }}
+          annotations: ${{ steps.meta-migrate.outputs.annotations }}
 
       - name: Generate artifact attestation for migrate
         uses: actions/attest-build-provenance@v1
