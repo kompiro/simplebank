@@ -41,6 +41,17 @@ jobs:
             org.opencontainers.image.description=app for simple bank
             org.opencontainers.image.vendor=kompiro
             org.opencontainers.image.licenses=MIT
+          flavor: |
+            latest=false
+          tags: |
+            # set latest tag for main branch
+            type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'main') }}
+            type=schedule,pattern={{date 'YYYYMMDD'}}
+            type=ref,event=branch
+            type=ref,event=tag
+            type=ref,event=pr
+            # full length sha
+            type=sha,format=long
 
       - name: Build and push app image
         uses: docker/build-push-action@v6
@@ -70,6 +81,17 @@ jobs:
             org.opencontainers.image.description=Migrate database schema
             org.opencontainers.image.vendor=kompiro
             org.opencontainers.image.licenses=MIT
+          flavor: |
+            latest=false
+          tags: |
+            # set latest tag for main branch
+            type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'main') }}
+            type=schedule,pattern={{date 'YYYYMMDD'}}
+            type=ref,event=branch
+            type=ref,event=tag
+            type=ref,event=pr
+            # full length sha
+            type=sha,format=long
 
       - name: Build and push migrate image
         uses: docker/build-push-action@v6
