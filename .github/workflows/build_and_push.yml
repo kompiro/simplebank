@@ -51,7 +51,7 @@ jobs:
             type=ref,event=tag
             type=ref,event=pr
             # full length sha
-            type=sha,format=long
+            type=sha,value=${{ github.sha }},prefix=,format=long
 
       - name: Build and push app image
         uses: docker/build-push-action@v6
@@ -91,7 +91,7 @@ jobs:
             type=ref,event=tag
             type=ref,event=pr
             # full length sha
-            type=sha,format=long
+            type=sha,value=${{ github.sha }},prefix=,format=long
 
       - name: Build and push migrate image
         uses: docker/build-push-action@v6
