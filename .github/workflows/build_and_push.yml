@@ -47,8 +47,6 @@ jobs:
           flavor: |
             latest=false
           tags: |
-            # set latest tag for main branch
-            type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'main') }}
             type=schedule,pattern={{date 'YYYYMMDD'}}
             type=ref,event=branch
             type=ref,event=tag
@@ -91,8 +89,6 @@ jobs:
           flavor: |
             latest=false
           tags: |
-            # set latest tag for main branch
-            type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'main') }}
             type=schedule,pattern={{date 'YYYYMMDD'}}
             type=ref,event=branch
             type=ref,event=tag
