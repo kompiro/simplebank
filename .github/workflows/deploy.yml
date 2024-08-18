@@ -21,13 +21,22 @@ jobs:
 
       - name: Pull Docker image
         run: |
-          docker image pull ${{ env.SOURCE_REPO_BASE }}/app:main
-          docker image pull ${{ env.SOURCE_REPO_BASE }}/migrate:main
+          docker image pull ${{ env.SOURCE_REPO_BASE }}/app:${{ github.sha }}
+          docker image pull ${{ env.SOURCE_REPO_BASE }}/migrate:${{ github.sha }}
 
-      - name: Tag for Destination
+      - name: Tag for Source
         run: |
-          docker image tag ${{ env.SOURCE_REPO_BASE }}/app:main ${{ env.DEST_REPO_BASE }}/app:${{ github.ref_name }}
-          docker image tag ${{ env.SOURCE_REPO_BASE }}/migrate:main ${{ env.DEST_REPO_BASE }}/migrate:${{ github.ref_name }}
+          docker image tag ${{ env.SOURCE_REPO_BASE }}/app:${{ github.sha }} ${{ env.SOURCE_REPO_BASE }}/app:${{ github.ref_name }}
+          docker image tag ${{ env.SOURCE_REPO_BASE }}/migrate:${{ github.sha }} ${{ env.SOURCE_REPO_BASE }}/migrate:${{ github.ref_name }}
+          docker image tag ${{ env.SOURCE_REPO_BASE }}/app:${{ github.sha }} ${{ env.SOURCE_REPO_BASE }}/app:latest
+          docker image tag ${{ env.SOURCE_REPO_BASE }}/migrate:${{ github.sha }} ${{ env.SOURCE_REPO_BASE }}/migrate:latest
+
+      - name: Push Docker image to Source
+        run: |
+          docker image push ${{ env.SOURCE_REPO_BASE }}/app:${{ github.ref_name }}
+          docker image push ${{ env.SOURCE_REPO_BASE }}/migrate:${{ github.ref_name }}
+          docker image push ${{ env.SOURCE_REPO_BASE }}/app:latest
+          docker image push ${{ env.SOURCE_REPO_BASE }}/migrate:latest
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -40,7 +49,16 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Push Docker image
+      - name: Tag for Destination
+        run: |
+          docker image tag ${{ env.SOURCE_REPO_BASE }}/app:${{ github.ref_name }} ${{ env.DEST_REPO_BASE }}/app:${{ github.ref_name }}
+          docker image tag ${{ env.SOURCE_REPO_BASE }}/migrate:${{ github.ref_name }} ${{ env.DEST_REPO_BASE }}/migrate:${{ github.ref_name }}
+          docker image tag ${{ env.SOURCE_REPO_BASE }}/app:${{ github.ref_name }} ${{ env.DEST_REPO_BASE }}/app:${{ github.sha }}
+          docker image tag ${{ env.SOURCE_REPO_BASE }}/migrate:${{ github.ref_name }} ${{ env.DEST_REPO_BASE }}/migrate:${{ github.sha }}
+
+      - name: Push Docker image to Destination
         run: |
           docker image push ${{ env.DEST_REPO_BASE }}/app:${{ github.ref_name }}
           docker image push ${{ env.DEST_REPO_BASE }}/migrate:${{ github.ref_name }}
+          docker image push ${{ env.DEST_REPO_BASE }}/app:${{ github.sha }}
+          docker image push ${{ env.DEST_REPO_BASE }}/migrate:${{ github.sha }}
