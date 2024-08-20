@@ -3,8 +3,6 @@ name: Deploy
 on:
   release:
     types: [published]
-  push: 
-    branches: [use_oidc_role]
 
 jobs:
   push_to_ecr:
