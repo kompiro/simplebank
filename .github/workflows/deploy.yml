@@ -9,6 +9,11 @@ on:
 jobs:
   push_to_ecr:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+
     env:
       SOURCE_REPO_BASE: ghcr.io/${{ github.repository_owner }}/simplebank
       DEST_REPO_BASE: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-2.amazonaws.com/simplebank
