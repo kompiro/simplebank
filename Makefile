@@ -1,16 +1,16 @@
-DB_URL=postgresql://postgres:postgres@db:5432/simple_bank?sslmode=disable
+DB_SOURCE=postgresql://postgres:postgres@db:5432/simple_bank?sslmode=disable
 
 migrate:
-	migrate -path db/migration -database "$(DB_URL)" -verbose up
+	migrate -path db/migration -database "$(DB_SOURCE)" -verbose up
 
 migrateup:
-	migrate -path db/migration -database "$(DB_URL)" -verbose up 1
+	migrate -path db/migration -database "$(DB_SOURCE)" -verbose up 1
 
 rollback:
-	migrate -path db/migration -database "$(DB_URL)" -verbose down
+	migrate -path db/migration -database "$(DB_SOURCE)" -verbose down
 
 migratedown:
-	migrate -path db/migration -database "$(DB_URL)" -verbose down 1
+	migrate -path db/migration -database "$(DB_SOURCE)" -verbose down 1
 
 sqlc:
 	sqlc generate
