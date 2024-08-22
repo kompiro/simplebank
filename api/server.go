@@ -43,6 +43,10 @@ func NewServer(config util.Config, store db.Store) (*Server, error) {
 func (server *Server) setupRouter() {
 	router := gin.Default()
 
+	router.GET("/", server.root)
+
+	router.GET("/healthz", server.healthCheck)
+
 	router.POST("/users", server.CreateUser)
 	router.POST("/users/login", server.loginUser)
 
@@ -58,6 +62,10 @@ func (server *Server) setupRouter() {
 	authRouters.POST("/transfers", server.CreateTransfer)
 
 	server.router = router
+}
+
+func (server *Server) root(ctx *gin.Context) {
+	ctx.String(200, "Welcome!")
 }
 
 // Start runs the HTTP server on a specific address.
