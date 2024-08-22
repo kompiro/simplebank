@@ -59,10 +59,14 @@ jobs:
           docker image tag ${{ env.SOURCE_REPO_BASE }}/migrate:${{ github.ref_name }} ${{ env.DEST_REPO_BASE }}/migrate:${{ github.ref_name }}
           docker image tag ${{ env.SOURCE_REPO_BASE }}/app:${{ github.ref_name }} ${{ env.DEST_REPO_BASE }}/app:${{ github.sha }}
           docker image tag ${{ env.SOURCE_REPO_BASE }}/migrate:${{ github.ref_name }} ${{ env.DEST_REPO_BASE }}/migrate:${{ github.sha }}
-
+          docker image tag ${{ env.SOURCE_REPO_BASE }}/app:${{ github.ref_name }} ${{ env.DEST_REPO_BASE }}/app:latest
+          docker image tag ${{ env.SOURCE_REPO_BASE }}/migrate:${{ github.ref_name }} ${{ env.DEST_REPO_BASE }}/migrate:latest
+      
       - name: Push Docker image to Destination
         run: |
           docker image push ${{ env.DEST_REPO_BASE }}/app:${{ github.ref_name }}
           docker image push ${{ env.DEST_REPO_BASE }}/migrate:${{ github.ref_name }}
           docker image push ${{ env.DEST_REPO_BASE }}/app:${{ github.sha }}
           docker image push ${{ env.DEST_REPO_BASE }}/migrate:${{ github.sha }}
+          docker image push ${{ env.DEST_REPO_BASE }}/app:latest
+          docker image push ${{ env.DEST_REPO_BASE }}/migrate:latest
