@@ -41,5 +41,8 @@ migrate.image.push:
 	docker image tag simplebank-migrate:latest ghcr.io/kompiro/simplebank-migrate:latest
 	docker image push ghcr.io/kompiro/simplebank-migrate:latest
 
-.PHONY: migrateup migrate migratedown rollback sqlc test server mock app.image.build app.image.push migrate.image.build migrate.image.push
+release:
+	gh release create `date +rel-%Y%m%d` --generate-notes
+
+.PHONY: migrateup migrate migratedown rollback sqlc test server mock app.image.build app.image.push migrate.image.build migrate.image.push release
 
