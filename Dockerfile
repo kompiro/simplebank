@@ -1,4 +1,4 @@
-FROM golang:1.22.5-alpine3.20 AS builder
+FROM golang:1.23.0-alpine3.20 AS builder
 WORKDIR /app
 
 ARG MIGRATE_VERSION=4.17.1
