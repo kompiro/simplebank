@@ -1,4 +1,5 @@
 DB_SOURCE=postgresql://postgres:postgres@db:5432/simple_bank?sslmode=disable
+IMAGE_TAG:=latest
 
 migrate:
 	migrate -path db/migration -database "$(DB_SOURCE)" -verbose up
@@ -34,6 +35,9 @@ app.image.push:
 	docker image tag simplebank:latest ghcr.io/kompiro/simplebank:latest
 	docker image push ghcr.io/kompiro/simplebank:latest
 
+app.image.ecspresso:
+	@IMAGE_TAG=$(IMAGE_TAG) ecspresso deploy --config ecspresso/simplebank/ecspresso.yml 
+
 migrate.image.build:
 	docker buildx build -t simplebank-migrate:latest --target migrate .
 
@@ -41,8 +45,11 @@ migrate.image.push:
 	docker image tag simplebank-migrate:latest ghcr.io/kompiro/simplebank-migrate:latest
 	docker image push ghcr.io/kompiro/simplebank-migrate:latest
 
+migrate.image.ecspresso:
+	@IMAGE_TAG=$(IMAGE_TAG) ecspresso run --config ecspresso/migrate/ecspresso.yml 
+
 release:
 	gh release create `date +rel-%Y%m%d` --generate-notes
 
-.PHONY: migrateup migrate migratedown rollback sqlc test server mock app.image.build app.image.push migrate.image.build migrate.image.push release
+.PHONY: migrateup migrate migratedown rollback sqlc test server mock app.image.build app.image.push migrate.image.build migrate.image.push migrate.image.ecspresso release 
 
