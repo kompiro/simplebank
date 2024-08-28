@@ -15,7 +15,6 @@ jobs:
   test:
       name: Test
       runs-on: ubuntu-latest
-      container: golang:1.22.5-alpine3.20
       services:
         db:
           image: postgres:latest
@@ -34,6 +33,10 @@ jobs:
       steps:
       - name: Check out code into the Go module directory
         uses: actions/checkout@v4
+      - name: Setup golang
+        uses: actions/setup-go@v5
+        with:
+          go-version: stable
 
       - name: Install golang migrate
         run: |
