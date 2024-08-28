@@ -38,9 +38,12 @@
         "[go]": {
           "editor.tabSize": 4,
           "editor.formatOnSave": true,
+          "editor.formatOnPaste": true,
+          "editor.insertSpaces": false,
           "editor.codeActionsOnSave": {
             "source.organizeImports": "explicit"
-          }
+          },
+          "editor.defaultFormatter": "golang.go"
         },
         "editor.minimap.enabled": false,
         "editor.guides.bracketPairs": true,
