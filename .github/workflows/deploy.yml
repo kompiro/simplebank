@@ -7,6 +7,7 @@ on:
 
 jobs:
   push_to_ecr:
+    environment: "dev"
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -71,3 +72,14 @@ jobs:
           docker image push ${{ env.DEST_REPO_BASE }}/migrate:${{ github.sha }}
           docker image push ${{ env.DEST_REPO_BASE }}/app:latest
           docker image push ${{ env.DEST_REPO_BASE }}/migrate:latest
+
+      - uses: actions/checkout@v3
+      - uses: kayac/ecspresso@v2
+        with:
+          version: v2.3.0
+      - name: migration
+        run: |
+          make migrate.image.ecspresso IMAGE_TAG=${{ github.ref_name }}
+      - name: deploy
+        run: |
+          make app.image.ecspresso IMAGE_TAG=${{ github.ref_name }}
