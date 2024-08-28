@@ -1,0 +1,6 @@
+region: us-east-2
+cluster: simplebank-62f60d4
+service: simplebank-bf2fe7a
+service_definition: ecs-service-def.json
+task_definition: ecs-task-def.json
+timeout: "3m0s"
