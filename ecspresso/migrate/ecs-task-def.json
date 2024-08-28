@@ -1,0 +1,56 @@
+{
+  "containerDefinitions": [
+    {
+      "cpu": 128,
+      "environment": [
+        {
+          "name": "DB_HOST",
+          "value": "simplebanke2e0bd3.cd60s2o4o1jo.us-east-2.rds.amazonaws.com"
+        },
+        {
+          "name": "DB_PORT",
+          "value": "5432"
+        }
+      ],
+      "essential": true,
+      "image": "774533787977.dkr.ecr.us-east-2.amazonaws.com/simplebank/migrate:{{ must_env `IMAGE_TAG` }}",
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "simplebank-migration-42bcca0",
+          "awslogs-region": "us-east-2",
+          "awslogs-stream-prefix": "simplebank-migration"
+        }
+      },
+      "memory": 512,
+      "name": "simplebank-migration",
+      "secrets": [
+        {
+          "name": "DB_SOURCE",
+          "valueFrom": "arn:aws:secretsmanager:us-east-2:774533787977:secret:simplebank-rds-url-75f4d86-BDELgW"
+        }
+      ]
+    }
+  ],
+  "cpu": "256",
+  "executionRoleArn": "arn:aws:iam::774533787977:role/task-exec-role-b9c0082",
+  "family": "simplebank-migration-44eb7c28",
+  "ipcMode": "",
+  "memory": "512",
+  "networkMode": "awsvpc",
+  "pidMode": "",
+  "requiresCompatibilities": [
+    "FARGATE"
+  ],
+  "tags": [
+    {
+      "key": "Project",
+      "value": "simplebank"
+    },
+    {
+      "key": "Environment",
+      "value": "Dev"
+    }
+  ],
+  "taskRoleArn": "arn:aws:iam::774533787977:role/simplebank-migration-task-dfc4432"
+}

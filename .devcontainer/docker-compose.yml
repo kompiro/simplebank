@@ -6,6 +6,10 @@ services:
       - ..:/workspace/
       - history:/home/vscode/.history
       - /var/run/docker.sock:/var/run/docker.sock
+      - type: bind
+        source: ${HOME}/.aws/
+        target: /home/vscode/.aws/
+        consistency: cached
     stdin_open: true
     tty: true
     depends_on:

@@ -1,0 +1,42 @@
+{
+  "deploymentConfiguration": {
+    "deploymentCircuitBreaker": {
+      "enable": false,
+      "rollback": false
+    },
+    "maximumPercent": 200,
+    "minimumHealthyPercent": 100
+  },
+  "deploymentController": {
+    "type": "ECS"
+  },
+  "desiredCount": 1,
+  "enableECSManagedTags": false,
+  "enableExecuteCommand": true,
+  "healthCheckGracePeriodSeconds": 0,
+  "launchType": "FARGATE",
+  "loadBalancers": [
+    {
+      "containerName": "simplebank-app",
+      "containerPort": 3000,
+      "targetGroupArn": "arn:aws:elasticloadbalancing:us-east-2:774533787977:targetgroup/simplebank-v2-0ae34ed/30eac1cd45a8fe0f"
+    }
+  ],
+  "networkConfiguration": {
+    "awsvpcConfiguration": {
+      "assignPublicIp": "DISABLED",
+      "securityGroups": [
+        "sg-04ff3bcaa59787398"
+      ],
+      "subnets": [
+        "subnet-0190326a3d456ead7",
+        "subnet-0dfe9f759884b9d59",
+        "subnet-06cd68cd8692a723a"
+      ]
+    }
+  },
+  "platformFamily": "Linux",
+  "platformVersion": "LATEST",
+  "propagateTags": "NONE",
+  "schedulingStrategy": "REPLICA"
+}
