@@ -38,3 +38,7 @@ asdf global ecspresso 2.3.0
 asdf plugin add awscli
 asdf install awscli 2.17.39
 asdf global awscli 2.17.39
+
+# install dbdocs
+npm install -g dbdocs
+npm install -g @dbml/cli
