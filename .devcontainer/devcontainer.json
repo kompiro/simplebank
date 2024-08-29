@@ -36,7 +36,8 @@
         "ms-azuretools.vscode-docker",
         "TakumiI.markdowntable",
         "matt-meyers.vscode-dbml",
-        "nicolas-liger.dbml-viewer"
+        "nicolas-liger.dbml-viewer",
+        "zxh404.vscode-proto3"
       ],
       "settings": {
         "editor.tabSize": 2,

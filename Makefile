@@ -34,6 +34,11 @@ server:
 mock:
 	mockgen -package mockdb -destination db/mock/store.go github.com/techschool/simplebank/db/sqlc Store
 
+proto:
+	protoc --proto_path=proto --go_out=pb --go_opt=paths=source_relative \
+	--go-grpc_out=pb --go-grpc_opt=paths=source_relative \
+	proto/*.proto
+
 app.image.build:
 	docker buildx build -t simplebank:latest --target app .
 
@@ -58,5 +63,9 @@ migrate.image.ecspresso:
 release:
 	gh release create `date +rel-%Y%m%d` --generate-notes
 
-.PHONY: migrateup migrate migratedown rollback db_docs db_schema sqlc test server mock app.image.build app.image.push migrate.image.build migrate.image.push migrate.image.ecspresso release 
+.PHONY: migrateup migrate migratedown rollback \
+  db_docs db_schema sqlc test server mock proto \
+	app.image.build app.image.push app.image.ecspresso \
+	migrate.image.build migrate.image.push migrate.image.ecspresso \
+	release 
 

@@ -7,7 +7,7 @@ sudo cp .devcontainer/welcome.txt /usr/local/etc/vscode-dev-containers/first-run
 
 # setup migrate command
 curl -s https://packagecloud.io/install/repositories/golang-migrate/migrate/script.deb.sh | sudo bash
-sudo apt install migrate=4.17.1
+sudo apt install migrate
 
 # setup sqlc
 go install github.com/sqlc-dev/sqlc/cmd/sqlc@latest
@@ -42,3 +42,12 @@ asdf global awscli 2.17.39
 # install dbdocs
 npm install -g dbdocs
 npm install -g @dbml/cli
+
+# install protoc 
+asdf plugin add protoc
+asdf install protoc 28.0
+asdf global protoc 28.0
+
+# install protoc plugins
+go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
