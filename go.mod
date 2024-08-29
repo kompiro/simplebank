@@ -2,6 +2,8 @@ module github.com/techschool/simplebank
 
 go 1.22.5
 
+toolchain go1.23.0
+
 require (
 	github.com/aead/chacha20poly1305 v0.0.0-20170617001512-233f39982aeb
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
