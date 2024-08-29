@@ -16,6 +16,12 @@ migratedown:
 sqlc:
 	sqlc generate
 
+db_docs:
+	dbdocs build doc/db.dbml
+
+db_schema:
+	dbml2sql --postgres -o doc/schema.sql doc/db.dbml
+
 test:
 	go test -v -cover ./...
 
@@ -46,10 +52,11 @@ migrate.image.push:
 	docker image push ghcr.io/kompiro/simplebank-migrate:latest
 
 migrate.image.ecspresso:
-	@IMAGE_TAG=$(IMAGE_TAG) ecspresso run --config ecspresso/migrate/ecspresso.yml 
+	@IMAGE_TAG=$(IMAGE_TAG) ecspresso run --config ecspresso/migrate/ecspresso.yml
+
 
 release:
 	gh release create `date +rel-%Y%m%d` --generate-notes
 
-.PHONY: migrateup migrate migratedown rollback sqlc test server mock app.image.build app.image.push migrate.image.build migrate.image.push migrate.image.ecspresso release 
+.PHONY: migrateup migrate migratedown rollback db_docs db_schema sqlc test server mock app.image.build app.image.push migrate.image.build migrate.image.push migrate.image.ecspresso release 
 

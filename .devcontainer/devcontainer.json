@@ -9,7 +9,10 @@
     "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {},
     "ghcr.io/devcontainers/features/go:1": {
       "version": "1.23.0"
-    }
+    },
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "22.7.0"
+    },
   },
   "remoteEnv": {
     "GH_TOKEN": "${localEnv:GH_TOKEN}"
@@ -31,7 +34,9 @@
         "oderwat.indent-rainbow",
         "shd101wyy.markdown-preview-enhanced",
         "ms-azuretools.vscode-docker",
-        "TakumiI.markdowntable"
+        "TakumiI.markdowntable",
+        "matt-meyers.vscode-dbml",
+        "nicolas-liger.dbml-viewer"
       ],
       "settings": {
         "editor.tabSize": 2,
