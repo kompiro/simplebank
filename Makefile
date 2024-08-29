@@ -39,6 +39,9 @@ proto:
 	--go-grpc_out=pb --go-grpc_opt=paths=source_relative \
 	proto/*.proto
 
+evans:
+	evans --host localhost --port 9090 -r repl
+
 app.image.build:
 	docker buildx build -t simplebank:latest --target app .
 
@@ -64,7 +67,7 @@ release:
 	gh release create `date +rel-%Y%m%d` --generate-notes
 
 .PHONY: migrateup migrate migratedown rollback \
-  db_docs db_schema sqlc test server mock proto \
+  db_docs db_schema sqlc test server mock proto evans \
 	app.image.build app.image.push app.image.ecspresso \
 	migrate.image.build migrate.image.push migrate.image.ecspresso \
 	release 
