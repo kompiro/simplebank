@@ -44,10 +44,10 @@ jobs:
           mv migrate /usr/local/bin/migrate
 
       - name: Run migrations
-        run: make migrate
+        run: make migrate DB_SOURCE=postgresql://postgres:postgres@localhost:5432/simple_bank?sslmode=disable
 
       - name: Test
-        run: make test-report
+        run: make test-report DB_SOURCE=postgresql://postgres:postgres@localhost:5432/simple_bank?sslmode=disable
 
       - name: Upload Test Results
         uses: actions/upload-artifact@v4  
