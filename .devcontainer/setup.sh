@@ -51,3 +51,6 @@ asdf global protoc 28.0
 # install protoc plugins
 go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
 go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+
+# install evans
+go install github.com/ktr0731/evans@latest

@@ -29,7 +29,10 @@ test-report:
 	@DB_SOURCE=$(DB_SOURCE) go run gotest.tools/gotestsum@latest --junitfile test-report.xml -- -v -cover ./...
 
 server:
-	go run main.go
+	go run cmd/server/main.go
+
+server.grpc:
+	go run cmd/grpc/main.go
 
 mock:
 	mockgen -package mockdb -destination db/mock/store.go github.com/techschool/simplebank/db/sqlc Store
@@ -61,7 +64,6 @@ migrate.image.push:
 
 migrate.image.ecspresso:
 	@IMAGE_TAG=$(IMAGE_TAG) ecspresso run --config ecspresso/migrate/ecspresso.yml
-
 
 release:
 	gh release create `date +rel-%Y%m%d` --generate-notes

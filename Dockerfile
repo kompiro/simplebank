@@ -9,7 +9,7 @@ RUN curl -L https://github.com/golang-migrate/migrate/releases/download/v${MIGRA
 RUN curl -L -O https://github.com/eficode/wait-for/releases/download/v${WAIT_FOR_VERSION}/wait-for
 
 # Cannot write under /app because of the --mount=type=bind
-RUN --mount=type=bind,target=. go build -o /bin/server main.go
+RUN --mount=type=bind,target=. go build -o /bin/server cmd/server/main.go
 
 # migrate environment
 FROM alpine:3.20 AS migrate
