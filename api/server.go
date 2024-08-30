@@ -47,7 +47,7 @@ func (server *Server) setupRouter() {
 
 	router.GET("/healthz", server.healthCheck)
 
-	router.POST("/users", server.CreateUser)
+	router.POST("/users", server.createUser)
 	router.POST("/users/login", server.loginUser)
 	router.POST("/tokens/renew_access", server.renewAccessToken)
 
