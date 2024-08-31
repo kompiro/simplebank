@@ -54,3 +54,8 @@ go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
 
 # install evans
 go install github.com/ktr0731/evans@latest
+
+# install grpc-gateway
+go install \
+    github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@latest \
+    github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@latest
