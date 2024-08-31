@@ -10,6 +10,7 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
+	"google.golang.org/protobuf/encoding/protojson"
 
 	db "github.com/techschool/simplebank/db/sqlc"
 	"github.com/techschool/simplebank/gapi"
@@ -71,7 +72,17 @@ func runGatewayServer(config util.Config, store db.Store) {
 		log.Fatal("cannot start server: ", err)
 	}
 
-	grpcMux := runtime.NewServeMux()
+	jsonOption := runtime.WithMarshalerOption(runtime.MIMEWildcard, &runtime.JSONPb{
+		MarshalOptions: protojson.MarshalOptions{
+			UseProtoNames: true,
+		},
+		UnmarshalOptions: protojson.UnmarshalOptions{
+			DiscardUnknown: true,
+		},
+	})
+
+	grpcMux := runtime.NewServeMux(jsonOption)
+
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
